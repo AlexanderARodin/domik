@@ -83,30 +83,33 @@ impl TestView {
         ui.horizontal( |ui| {
                 let btnN = ui.button( "None" );
                 if btnN.clicked(){
-                    let setup = "[AudioSource]\nMain = 'None'";
+                    let setup = "[AudioSource]\nName = 'None'";
                     self.applySetup( setup, None );
                 }
                 let btnS = ui.button( "SimpleSynth" );
                 if btnS.clicked(){
-                    let setup = "[AudioSource]\nMain = 'Simple'";
+                    let setup = "[AudioSource]\nName = 'Simple'";
                     self.applySetup( setup, None );
                 }
                 let btnRA = ui.button( "RustySynt - Strings" );
                 if btnRA.clicked(){
-                    let setup = "[AudioSource]\nMain = 'RustySynth'";
+                    let setup = "[AudioSource]\nName = 'RustySynth'";
                     self.applySetup( setup, Some(SF_STRINGS) );
                 }
                 let btnRB = ui.button( "RustySynt - Piano" );
                 if btnRB.clicked(){
-                    let setup = "[AudioSource]\nMain = 'RustySynth'";
+                    let setup = "[AudioSource]\nName = 'RustySynth'";
                     self.applySetup( setup, Some(SF_PIANO) );
+                }
+                let btnRA = ui.button( "Sequencer:Simple" );
+                if btnRA.clicked(){
+                    let setup = "[AudioSource]\nName = 'Sequencer'\n[AudioSource.Sequencer]\nMainVoice = 'Simple'";
+                    self.applySetup( setup, None );
                 }
                 let btnRA = ui.button( "Sequencer:RustySynt - Strings" );
                 if btnRA.clicked(){
-                    let setup = "[AudioSource]\nMain = 'Sequencer'";
-                    self.applySetup( setup, Some(SF_PIANO) );
-                    //self.applySetup( setup, Some(SF_STRINGS) );
-                    //self.applySetup( "Sequencer:RustySynt", Some(SF_STRINGS) );
+                    let setup = "[AudioSource]\nName = 'Sequencer'\n[AudioSource.Sequencer]\nMainVoice = 'RustySynth'";
+                    self.applySetup( setup, Some(SF_STRINGS) );
                 }
             });
         ui.separator();
