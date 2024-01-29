@@ -118,32 +118,44 @@ impl TestView {
         ui.horizontal( |ui| {
             let btnO = ui.button( "[-]" );
             if btnO.clicked(){
-                let _ = self.audio.exec( "seq 1");
+                if let Err(e) = self.audio.exec( "seq 1") {
+                    log::error(&e.to_string());
+                }
             }
             let btnO1 = ui.button( "[+]" );
             if btnO1.clicked(){
-                let _ = self.audio.exec( "seq auto");
+                if let Err(e) = self.audio.exec( "seq auto") {
+                    log::error(&e.to_string());
+                }
             }
             ui.separator();
-            let mut test_txt = "note ON";
+            let mut test_txt = "on60#127";
             let btnA = ui.button( test_txt );
             if btnA.clicked(){
-                let _ = self.audio.exec( test_txt );
+                if let Err(e) = self.audio.exec( test_txt ) {
+                    log::error(&e.to_string());
+                }
             }
-                    test_txt = "note ON2";
+                    test_txt = "on67";
             let btnA1 = ui.button( test_txt );
             if btnA1.clicked(){
-                let _ = self.audio.exec( test_txt );
+                if let Err(e) = self.audio.exec( test_txt ) {
+                    log::error(&e.to_string());
+                }
             }
-                    test_txt = "note ON3";
+                    test_txt = "on71#1";
             let btnA2 = ui.button( test_txt );
             if btnA2.clicked(){
-                let _ = self.audio.exec( test_txt );
+                if let Err(e) = self.audio.exec( test_txt ) {
+                    log::error(&e.to_string());
+                }
             }
-                    test_txt = "note OFF";
+                    test_txt = "off60";
             let btnB = ui.button( test_txt );
             if btnB.clicked(){
-                let _ = self.audio.exec( test_txt );
+                if let Err(e) = self.audio.exec( test_txt ) {
+                    log::error(&e.to_string());
+                }
             }
         });
 
