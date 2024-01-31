@@ -9,8 +9,8 @@ edition = "2021"
 #raalog = { git = "https://github.com/AlexanderARodin/raalog.git", branch="dev" }
 raalog = { git = "https://github.com/AlexanderARodin/raalog.git", tag="v0.2.0" }
 
-# audio_server = { path = "../audio_server/" }
-audio_server = { git = "https://github.com/AlexanderARodin/audio_server.git", branch="main" }
+audio_server = { path = "../audio_server/" }
+# audio_server = { git = "https://github.com/AlexanderARodin/audio_server.git", branch="main" }
 
 egui = "0.24.0"
 eframe = { version = "0.24.0", default-features = false, features = [

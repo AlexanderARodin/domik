@@ -116,46 +116,54 @@ impl TestView {
         ui.separator();
         ui.label("playing notes:");
         ui.horizontal( |ui| {
+            let mut test_txt = "";
             let btnO = ui.button( "[-]" );
             if btnO.clicked(){
-                if let Err(e) = self.audio.exec( "seq 1") {
-                    log::error(&e.to_string());
-                }
+                let setup = r#"
+                    [Sequence]
+                    notes = [ 
+                             [1  , 'on',  90, 80  ],
+                        0.5, [1  , 'off', 90, 80  ],
+                             [1  , 'on',  91, 80  ],
+                        0.5, [1  , 'off', 91, 80  ],
+                             [1  , 'on',  92, 80  ],
+                        0.5, [1  , 'off', 92, 80  ],
+                             [1  , 'on',  91, 80  ],
+                        0.5, [1  , 'off', 91, 80  ],
+                        1.0, [1  , 'off', 92, 80  ],
+                    ]
+                    transpose = 7
+                    speed = 2.0
+                "#;
+                self.applySetup( setup, None );
+                    test_txt = "play once";
+                self.doExec( test_txt );
             }
+                    test_txt = "seq auto";
             let btnO1 = ui.button( "[+]" );
             if btnO1.clicked(){
-                if let Err(e) = self.audio.exec( "seq auto") {
-                    log::error(&e.to_string());
-                }
+                self.doExec( test_txt );
             }
             ui.separator();
-            let mut test_txt = "on60#127";
+                    test_txt = "on60#127";
             let btnA = ui.button( test_txt );
             if btnA.clicked(){
-                if let Err(e) = self.audio.exec( test_txt ) {
-                    log::error(&e.to_string());
-                }
+                self.doExec( test_txt );
             }
                     test_txt = "on67";
             let btnA1 = ui.button( test_txt );
             if btnA1.clicked(){
-                if let Err(e) = self.audio.exec( test_txt ) {
-                    log::error(&e.to_string());
-                }
+                self.doExec( test_txt );
             }
                     test_txt = "on71#1";
             let btnA2 = ui.button( test_txt );
             if btnA2.clicked(){
-                if let Err(e) = self.audio.exec( test_txt ) {
-                    log::error(&e.to_string());
-                }
+                self.doExec( test_txt );
             }
                     test_txt = "off60";
             let btnB = ui.button( test_txt );
             if btnB.clicked(){
-                if let Err(e) = self.audio.exec( test_txt ) {
-                    log::error(&e.to_string());
-                }
+                self.doExec( test_txt );
             }
         });
 
@@ -165,6 +173,11 @@ impl TestView {
         }
     }
 
+    fn doExec(&mut self, cmd: &str ) {
+        if let Err(e) = self.audio.exec( cmd ) {
+            log::error(&e.to_string());
+        }
+    }
     fn applySetup(&mut self, setup: &str, data: Option<&[u8]> ) {
         if let Err(e) = self.audio.config(setup, data ) {
             log::error(&e.to_string());
