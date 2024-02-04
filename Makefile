@@ -2,13 +2,18 @@
 help:
 	@cat Makefile
 
-serve: bindgen.wasm http.server
+serve: workspace.bindgen.wasm http.server
 
 http.server:
 	@cd dist && python3 -m http.server 3333
+
 bindgen.wasm: clean.dist release.wasm
+	@wasm-bindgen --out-dir dist --target web target/wasm32-unknown-unknown/release/domik.wasm
+	@cp -v assets/** dist/
+workspace.bindgen.wasm: clean.dist release.wasm
 	@wasm-bindgen --out-dir dist --target web ../target/wasm32-unknown-unknown/release/domik.wasm
 	@cp -v assets/** dist/
+
 clean.dist:
 	@rm -rf dist
 	@mkdir -p dist

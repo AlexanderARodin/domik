@@ -28,10 +28,11 @@ jobs:
     - name: try to Build Native
       run : echo 'leads to panic' #make release
 
-    - name: Build
-      run : |
-        make configure
-        make bindgen.wasm
+    - name: Configure
+      run : make configure
+
+    - name: Build bindgen WASM
+      run : make bindgen.wasm
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
