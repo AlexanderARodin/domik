@@ -5,12 +5,10 @@ edition = "2021"
 
 
 [dependencies]
-#raalog = { path="../../develop/raalog/" }
-#raalog = { git = "https://github.com/AlexanderARodin/raalog.git", branch="dev" }
-raalog = { git = "https://github.com/AlexanderARodin/raalog.git", tag="v0.2.0" }
-
-# audio_server = { path = "../audio_server/" }
-audio_server = { git = "https://github.com/AlexanderARodin/audio_server.git", branch="main" }
+# audio_server = { path = "../audio_server" }
+audio_server = 	{ git = "https://github.com/AlexanderARodin/audio_server.git", branch="main" }
+raalog = 	{ git = "https://github.com/AlexanderARodin/raalog.git", tag="v0.2.0" }
+call_list = 	{ git = "https://github.com/AlexanderARodin/call_list.git", branch="main" }
 
 egui = "0.24.0"
 eframe = { version = "0.24.0", default-features = false, features = [
@@ -20,8 +18,6 @@ eframe = { version = "0.24.0", default-features = false, features = [
 ]}
 serde = { version = "1", features = ["derive"] }
 
-tinyaudio = "0.1.1"
-rustysynth = "1.2.0"
 
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
