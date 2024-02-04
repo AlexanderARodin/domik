@@ -7,7 +7,7 @@ serve: bindgen.wasm http.server
 http.server:
 	@cd dist && python3 -m http.server 3333
 bindgen.wasm: clean.dist release.wasm
-	@wasm-bindgen --out-dir dist --target web target/wasm32-unknown-unknown/release/domik.wasm
+	@wasm-bindgen --out-dir dist --target web ../target/wasm32-unknown-unknown/release/domik.wasm
 	@cp -v assets/** dist/
 clean.dist:
 	@rm -rf dist

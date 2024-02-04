@@ -7,6 +7,44 @@ use raalog::log;
 static SF_PIANO:   &'static [u8] = include_bytes!("../SoundFonts/Piano Grand.SF2");
 static SF_STRINGS: &'static [u8] = include_bytes!("../SoundFonts/String Marcato.SF2");
 //static SF_ORGAN:   &'static [u8] = include_bytes!("../../SoundFonts/Organ Chorus.SF2");
+static TEST_XXX: &str = r#"
+    autoexec = [
+        'stop',
+        { setup = 'NoSynth' },
+        'start',
+    ]
+    [Sequence]
+    notes = [ 
+             [1  , 'on',  90, 80  ],
+        0.5, [1  , 'off', 90, 80  ],
+             [1  , 'on',  91, 80  ],
+        0.5, [1  , 'off', 91, 80  ],
+             [1  , 'on',  92, 80  ],
+        0.5, [1  , 'off', 92, 80  ],
+             [1  , 'on',  91, 80  ],
+        0.5, [1  , 'off', 91, 80  ],
+        1.0, [1  , 'off', 92, 80  ],
+    ]
+    transpose = 7
+    speed = 2.0
+"#;
+
+static TEST_SEQ: &str = r#"
+    [Sequence]
+    notes = [ 
+             [1  , 'on',  90, 80  ],
+        0.5, [1  , 'off', 90, 80  ],
+             [1  , 'on',  91, 80  ],
+        0.5, [1  , 'off', 91, 80  ],
+             [1  , 'on',  92, 80  ],
+        0.5, [1  , 'off', 92, 80  ],
+             [1  , 'on',  91, 80  ],
+        0.5, [1  , 'off', 91, 80  ],
+        1.0, [1  , 'off', 92, 80  ],
+    ]
+    transpose = 7
+    speed = 2.0
+"#;
 
 
 //  //  //  //  //  //  //  //
@@ -39,7 +77,10 @@ impl TestView {
     pub fn updateUI(&mut self, ui: &mut egui::Ui) {
         let b = ui.button("rrr");
             if b.clicked() {
-                self.audio = AudioServer::new();
+                let cfg = audio_server::Config::CoreConfigFromStr( TEST_XXX, Vec::new() );
+                if let Err(e) = self.audio.load_config(&cfg) {
+                    log::error(&e.to_string());
+                }
             }
         ui.separator();
         if self.audio.state() == "REALTIME" {
@@ -116,51 +157,39 @@ impl TestView {
         ui.separator();
         ui.label("playing notes:");
         ui.horizontal( |ui| {
-            let mut test_txt = "";
             let btnO = ui.button( "[-]" );
             if btnO.clicked(){
-                let setup = r#"
-                    [Sequence]
-                    notes = [ 
-                             [1  , 'on',  90, 80  ],
-                        0.5, [1  , 'off', 90, 80  ],
-                             [1  , 'on',  91, 80  ],
-                        0.5, [1  , 'off', 91, 80  ],
-                             [1  , 'on',  92, 80  ],
-                        0.5, [1  , 'off', 92, 80  ],
-                             [1  , 'on',  91, 80  ],
-                        0.5, [1  , 'off', 91, 80  ],
-                        1.0, [1  , 'off', 92, 80  ],
-                    ]
-                    transpose = 7
-                    speed = 2.0
-                "#;
-                self.applySetup( setup, None );
-                    test_txt = "play once";
-                self.doExec( test_txt );
+                self.applySetup( TEST_SEQ, None );
+                self.doExec( "play once" );
             }
+            let btnO0 = ui.button( "[+]" );
+            if btnO0.clicked(){
+                self.applySetup( TEST_SEQ, None );
+                self.doExec( "play loop" );
+            }
+            let mut test_txt;
                     test_txt = "seq auto";
-            let btnO1 = ui.button( "[+]" );
+            let btnO1 = ui.button( "[@]" );
             if btnO1.clicked(){
                 self.doExec( test_txt );
             }
             ui.separator();
-                    test_txt = "on60#127";
+                    test_txt = "[1  , 'on',  60, 127 ]";
             let btnA = ui.button( test_txt );
             if btnA.clicked(){
                 self.doExec( test_txt );
             }
-                    test_txt = "on67";
+                    test_txt = "[1  , 'on',  67,  64 ]";
             let btnA1 = ui.button( test_txt );
             if btnA1.clicked(){
                 self.doExec( test_txt );
             }
-                    test_txt = "on71#1";
+                    test_txt = "[1  , 'on',  71,   1 ]";
             let btnA2 = ui.button( test_txt );
             if btnA2.clicked(){
                 self.doExec( test_txt );
             }
-                    test_txt = "off60";
+                    test_txt = "[1  , 'off', 60,   1 ]";
             let btnB = ui.button( test_txt );
             if btnB.clicked(){
                 self.doExec( test_txt );
