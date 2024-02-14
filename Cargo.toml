@@ -7,6 +7,7 @@ edition = "2021"
 [dependencies]
 # audio_server = { path = "../audio_server" }
 audio_server = 	{ git = "https://github.com/AlexanderARodin/audio_server.git", branch="main" }
+
 raalog = 	{ git = "https://github.com/AlexanderARodin/raalog.git", tag="v0.2.0" }
 call_list = 	{ git = "https://github.com/AlexanderARodin/call_list.git", branch="main" }
 
